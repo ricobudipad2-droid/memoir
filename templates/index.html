@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% block title %}Write{% endblock %}
+{% block content %}
+<div class="page-header"><h1>✍️ New Entry</h1><p class="subtitle">Write your thoughts — AI will analyze sentiment, mood, and themes</p></div>
+{% if error %}<div class="alert alert-error">⚠️ {{ error }}</div>{% endif %}
+<div class="card"><form action="/write" method="POST">
+<div class="form-group"><label>Title (optional)</label><input type="text" name="title" class="input" placeholder="Today was..."></div>
+<div class="form-group"><label>Journal Entry</label><textarea name="content" rows="12" class="input" placeholder="Write freely..." required></textarea></div>
+<div class="form-group"><label>Tags (comma-separated)</label><input type="text" name="tags" class="input" placeholder="personal, work, reflection"></div>
+<button type="submit" class="btn btn-primary btn-lg">🔍 Analyze & Save</button>
+</form></div>
+<div class="features-grid">
+<div class="feature"><span>💭</span><h4>Sentiment</h4><p>Positive, negative, or neutral</p></div>
+<div class="feature"><span>📊</span><h4>Mood Score</h4><p>1-10 scale tracking</p></div>
+<div class="feature"><span>🏷️</span><h4>Themes</h4><p>Key topics extracted</p></div>
+<div class="feature"><span>💡</span><h4>Insights</h4><p>Actionable AI feedback</p></div>
+</div>
+{% endblock %}

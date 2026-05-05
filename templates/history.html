@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% block title %}History{% endblock %}
+{% block content %}
+<div class="page-header"><h1>📚 Journal History</h1>
+<form class="search-bar" method="GET"><input type="text" name="q" value="{{ search or '' }}" class="input" placeholder="Search entries..."><button class="btn btn-primary">🔍</button></form></div>
+<div class="card">
+{% for e in entries %}<div class="entry-preview"><a href="/entry/{{ e.id }}">
+<h4>{{ e.title or 'Untitled' }} <span class="mood-badge">{{ '😊' if e.mood_score > 6 else '😐' if e.mood_score > 3 else '😔' }} {{ e.mood_score }}</span></h4>
+<p>{{ e.content[:150] }}...</p>
+<div class="entry-meta"><span class="badge badge-{{ e.sentiment }}">{{ e.sentiment }}</span><span>{{ e.created_at }}</span>{% if e.tags %}<span>{{ e.tags }}</span>{% endif %}</div>
+</a></div>{% else %}<div class="empty-state">No entries yet. <a href="/">Write your first entry!</a></div>{% endfor %}
+</div>
+{% endblock %}

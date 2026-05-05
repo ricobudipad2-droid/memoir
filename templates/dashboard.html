@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% block title %}Dashboard{% endblock %}
+{% block content %}
+<div class="page-header"><h1>📊 Dashboard</h1><p class="subtitle">Mood tracking and journal analytics</p></div>
+<div class="stats-grid">
+<div class="stat-card"><div class="stat-value">{{ stats.total_entries }}</div><div class="stat-label">Entries</div></div>
+<div class="stat-card"><div class="stat-value">{{ '{:,}'.format(stats.total_tokens) }}</div><div class="stat-label">Tokens Used</div></div>
+</div>
+<div class="card"><h3>📈 Mood Over Time</h3><canvas id="mood-chart" height="200"></canvas></div>
+<div class="card"><h3>📝 Recent Entries</h3>
+{% for e in stats.recent %}<div class="entry-preview"><a href="/entry/{{ e.id }}"><h4>{{ e.title or 'Untitled' }}</h4><p>{{ e.content[:100] }}...</p><span class="mood-badge">{{ '😊' if e.mood_score > 6 else '😐' if e.mood_score > 3 else '😔' }} {{ e.mood_score }}/10</span></a></div>{% endfor %}
+</div>
+<script>
+const moodData = {{ mood_json }};
+if (moodData.length && document.getElementById('mood-chart')) {
+    new Chart(document.getElementById('mood-chart'), {type:'line', data:{labels:moodData.map(m=>m.date.split('T')[0]), datasets:[{label:'Mood', data:moodData.map(m=>m.score), borderColor:'#f59e0b', backgroundColor:'rgba(245,158,11,0.1)', fill:true, tension:0.3}]}, options:{responsive:true, scales:{y:{min:0,max:10,grid:{color:'#2a2015'}},x:{grid:{display:false}}}}});
+}
+</script>
+{% endblock %}
