@@ -1,0 +1,9 @@
+version: "3.9"
+services:
+  memoir:
+    build: .
+    ports: ["8888:8888"]
+    environment: [MIMO_API_KEY=${MIMO_API_KEY}]
+    volumes: [memoir-data:/app/data]
+volumes:
+  memoir-data:
